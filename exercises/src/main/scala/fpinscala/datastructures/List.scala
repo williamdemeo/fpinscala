@@ -52,24 +52,63 @@ object List { // `List` companion object. Contains functions for creating and wo
   // Exercise 3.2: 
   // Implement the function `tail` for removing the first element of a list    
   def tail[A](l: List[A]): List[A] = l match {
-    case Nil => Nil
+    case Nil => throw new Error("tail called on empty list")
     case Cons(h, t) => t
   }
 
-  def setHead[A](l: List[A], h: A): List[A] = sys.error("todo")
+  // Exercise 3.3
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    case Nil => Cons(h, Nil)
+    case Cons(oldh, t) => Cons(h, t) 
+  } 
+    
+  // Exercise 3.4: Drop the first n elements of a list; return the rest.
+  def drop[A](l: List[A], n: Int): List[A] = {
+    if (n==0) l else l match {
+      case Nil => throw new Error("drop called on empty list")
+      case Cons(h, t) => drop(t, n-1)
+    }
+  }
 
-  def drop[A](l: List[A], n: Int): List[A] = sys.error("todo")
+  // Exercise 3.5: dropWhile
+  // Drop each leading element h that satisfies f(h).
+  // As soon as an element appears that doesn't satisfy f, return the remaining list.  
+  // (grouping arguments allows for better type inference)
+  def dropWhile[A] (l: List[A]) (f: A => Boolean): List[A] = l match {
+    case Cons(h, t) if f(h) => dropWhile(t)(f) 
+    case _ => l
+  }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
+  // Exercise 3.6: init
+  // Take all but the last element of a list, dropping the last.
+  // (non-tail-recursive version)
+  def init[A](l: List[A]): List[A] = l match {
+    case Nil => throw new Error("init called on empty list")
+    case Cons(h, Nil) => Nil
+    case Cons(h, t) =>  Cons(h, init(t))
+  }
+  
+  // Exercise 3.6: init_tr
+  // Take all but the last element of a list, dropping the last.
+  // (tail-recursive version)
+  def init_tr[A](l: List[A]): List[A] = {
+    def init_aux(xs: List[A], acc: List[A]): List[A] = xs match {
+      case Nil => throw new Error("init called on empty list")
+      case Cons(h, Nil) => acc
+      case Cons(h, t) => init_aux(t, append(acc, Cons(h,Nil)))
+    }
+    init_aux(l, Nil)
+  }
 
-  def init[A](l: List[A]): List[A] = sys.error("todo")
-
-  // a non-tail-recursive length function
+  // length: return the (integer) length of a list  
+  // (non-tail-recursive version)
   def length[A](l: List[A]): Int = l match {
     case Nil => 0
     case Cons(h, t) => 1 + length(t)
   }
-  // a tail-recursive length function
+
+  // length_tr: return the (integer) length of a list  
+  // (tail-recursive version)
   def length_tr[A](l: List[A]): Int = {
     def length_aux[A](l: List[A], acc: Int): Int = l match {
       case Nil => acc

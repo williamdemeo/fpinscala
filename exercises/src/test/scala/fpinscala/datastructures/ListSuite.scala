@@ -32,6 +32,20 @@ object ListTests extends Properties("List") {
     length(l) == length(tail(l))+1
   }
   
+  /* Can't get this to work right.  Switching to simpler tests for now 
+  property("drop length") = forAll(genList) { (l: List[Int]) => 
+    val n = arbitrary[Int] suchThat (_ < length(l)) suchThat (_ > 0)
+    //  val randnum = Gen.choose(0,List.length(l)) 
+    (length(l) - n) == length(drop(l,n))
+  }
+  * 
+  */
+    
+  property("drop length") = {
+    val mylist = List(1,2,3)
+    length(mylist) - 1 == length(drop(mylist,1))
+  }
+  
   
 }
   
