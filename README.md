@@ -7,7 +7,7 @@ the original fpinscala git repository at the url above.)
 
 
 To get started with the exercises in the book "Functional Programming in Scala",
-I followed the steps below:
+I followed these steps:
 
 1. Add the eclipse plugin to my sbt install by putting the following
    line in the file ~/.sbt/0.13/plugins/plugins.sbt
@@ -47,6 +47,17 @@ I followed the steps below:
 
    The result: three projects are imported into Eclipse, called `answers`,
    `chapter-code`, and `exercises`.
+
+6. To use ScalaCheck and ScalaTest for testing my solutions to the exercises,
+   I added the file build.sbt in the exercises directory, with the following lines:
+
+        libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.2" % "test"
+
+        libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+
+        libraryDependencies += "junit" % "junit" % "4.10" % "test"
+
+   (These commands must be separated by blank lines, as shown above.)
 
 
 ---------------------------------
