@@ -31,15 +31,7 @@ I followed these steps:
 
    This switches to the exercises project, where your code lives, compiles the
    code, and then generates Eclipse files necessary to import the project into
-   Eclipse. (Apparently you could also do:
-
-        > console
-
-   to get a Scala REPL with access to your exercises, and
-
-        > run
-
-   ...but I didn't try these.
+   Eclipse.
 
 5. Import project into Eclipse:
 
@@ -48,8 +40,10 @@ I followed these steps:
    The result: three projects are imported into Eclipse, called `answers`,
    `chapter-code`, and `exercises`.
 
-6. To use ScalaCheck and ScalaTest for testing my solutions to the exercises,
-   I added the file build.sbt in the exercises directory, with the following lines:
+6. To use [ScalaCheck](https://www.scalacheck.org/) and
+   [ScalaTest](http://www.scalatest.org/) for testing my solutions to the
+   exercises, I added the file build.sbt in the exercises directory, with the
+   following lines: 
 
         libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.2" % "test"
 
@@ -58,6 +52,10 @@ I followed these steps:
         libraryDependencies += "junit" % "junit" % "4.10" % "test"
 
    (These commands must be separated by blank lines, as shown above.)
+   Then the `eclipse` command from step 4 above must be invoked one more time:
+   
+        ~/git/Scala/fpinscala$ sbt
+		> eclipse
 
 
 ---------------------------------
