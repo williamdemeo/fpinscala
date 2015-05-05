@@ -1,5 +1,60 @@
 [![Build status](https://travis-ci.org/fpinscala/fpinscala.svg?branch=master)](https://travis-ci.org/fpinscala/fpinscala)
 
+
+(This is my ([wjd](https://github.com/williamdemeo)) version of the README
+file.  For the [original version](#original-readme-file) scroll down, or go to
+the original fpinscala git repository at the url above.)
+
+
+To get started with the exercises in the book "Functional Programming in Scala",
+I followed the steps below:
+
+1. Add the eclipse plugin to my sbt install by putting the following
+   line in the file ~/.sbt/0.13/plugins/plugins.sbt
+
+        addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "3.0.0")
+
+   (Note: I already had sbt installed.)
+
+2. Fork the fpinscala repository from https://github.com/fpinscala/fpinscala into my own GitHub account.
+
+3. Clone my forked version of the repository to my local hard drive:
+
+        git clone git@github.com:williamdemeo/fpinscala.git
+	
+4. Enter the resulting fpinscala directory and execute the following:
+
+        ~/git/Scala/fpinscala$ sbt
+        > project exercises
+        > compile
+		> eclipse
+
+   This switches to the exercises project, where your code lives, compiles the
+   code, and then generates Eclipse files necessary to import the project into
+   Eclipse. (Apparently you could also do:
+
+        > console
+
+   to get a Scala REPL with access to your exercises, and
+
+        > run
+
+   ...but I didn't try these.
+
+5. Import project into Eclipse:
+
+        File --> Import --> Git --> Projects From Git --> etc.
+
+   The result: three projects are imported into Eclipse, called `answers`,
+   `chapter-code`, and `exercises`.
+
+
+---------------------------------
+
+## Original Readme File
+
+*The contents of the original readme file appear below.*
+
 This repository contains exercises, hints, and answers for the book
 [Functional Programming in Scala](http://manning.com/bjarnason/). Along
 with the book itself, it's the closest you'll get to having your own
