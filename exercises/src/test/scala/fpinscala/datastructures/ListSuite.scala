@@ -1,4 +1,5 @@
 package fpinscala.datastructures
+import List._
 
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
@@ -11,34 +12,26 @@ import Arbitrary._
 import Gen._
 import Prop._
 
-object QuickCheckIntList extends QuickCheckList with List[Int]
 
 @RunWith(classOf[JUnitRunner])
 class ListSuite extends FunSuite with Checkers {
-  def checkBogus(p: Prop) {
-    var ok = false
-    try {
-      check(p)
-    } catch {
-      case e: TestFailedException =>
-        ok = true
-    }
-    assert(ok, "A bogus list will NOT satisfy all properties. Try to find the bug!")
+  test("tail length") {
+    check(ListTests)
   }
-
-  test("Binomial heap satisfies properties.") {
-    check(new QuickCheckList with List[Int])
-  }
-
 }
 
+object ListTests extends Properties("List") {
 
-abstract class QuickCheckList extends Properties("List") {
-  
+  // generate random lists (to be used when testing the properties below)
   lazy val genList: Gen[List[Int]] = for {
-    n <- arbitrary[Int]  // Generate random n:Int to be inserted into list l:List[Int]
-    l <- oneOf(const(Nil), genList)  // Generate list l:L to which random element n:Int will be added
-  } yield Cons(n,l)  // return the list l updated with element n
+    n <- arbitrary[Int]               // Generate random n:Int to be inserted into list l
+    l <- oneOf(const(Nil), genList)   // Generate random list l:List[Int] to which n will be added
+  } yield Cons(n,l)                   // return the list l updated with element n
 
-
-}  
+  property("tail length") = forAll(genList){ (l: List[Int]) =>
+    length(l) == length(tail(l))+1
+  }
+  
+  
+}
+  

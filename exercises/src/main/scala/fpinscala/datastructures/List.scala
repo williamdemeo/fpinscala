@@ -64,7 +64,19 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   def init[A](l: List[A]): List[A] = sys.error("todo")
 
-  def length[A](l: List[A]): Int = sys.error("todo")
+  // a non-tail-recursive length function
+  def length[A](l: List[A]): Int = l match {
+    case Nil => 0
+    case Cons(h, t) => 1 + length(t)
+  }
+  // a tail-recursive length function
+  def length_tr[A](l: List[A]): Int = {
+    def length_aux[A](l: List[A], acc: Int): Int = l match {
+      case Nil => acc
+      case Cons(h, t) => length_aux(t, acc+1)
+    }
+    length_aux(l,0)
+  }
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = sys.error("todo")
 
