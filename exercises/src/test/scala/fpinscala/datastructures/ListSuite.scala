@@ -28,23 +28,31 @@ object ListTests extends Properties("List") {
     l <- oneOf(const(Nil), genList)   // Generate random list l:List[Int] to which n will be added
   } yield Cons(n,l)                   // return the list l updated with element n
 
-  property("tail length") = forAll(genList){ (l: List[Int]) =>
+  def choose(lo: Int, hi: Int): Gen[Int] =
+    for (x <- arbitrary[Int]) yield lo + x % (hi-lo)
+    
+  lazy val genListInt: Gen[(List[Int], Int)] = for {
+    l <- genList
+    n <- choose(0, length(l))
+    if (length(l)>0 && n > 0)
+  } yield (l, n)
+
+  property("random tail length") = forAll(genList){ (l: List[Int]) =>
     length(l) == length(tail(l))+1
   }
-  
-  /* Can't get this to work right.  Switching to simpler tests for now 
-  property("drop length") = forAll(genList) { (l: List[Int]) => 
-    val n = arbitrary[Int] suchThat (_ < length(l)) suchThat (_ > 0)
-    //  val randnum = Gen.choose(0,List.length(l)) 
-    (length(l) - n) == length(drop(l,n))
-  }
-  * 
-  */
-    
-  property("drop length") = {
+
+  property("simple drop length") = {
     val mylist = List(1,2,3)
     length(mylist) - 1 == length(drop(mylist,1))
   }
+  property("random drop length") = forAll(genListInt) { pair =>
+    if (length(pair._1)> pair._2) {
+      println("length(l) = " + length(pair._1) + "    n = " + pair._2)
+      length(pair._1) - pair._2 == length(drop(pair._1,pair._2))
+    }
+    else true
+  }
+  
   
   
 }
